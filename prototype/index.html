@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="个人 Markdown 笔记与知识管理工具本地笔记">
+  <title>个人 Markdown 笔记本地笔记</title>
+  <link rel="stylesheet" href="prototype.css">
+</head>
+<body>
+  <script>try{if(JSON.parse(localStorage.getItem('markdown-notes-ui-v1')||'{}').theme==='dark')document.body.classList.add('dark')}catch{}</script>
+  <a class="skip" href="#preview">跳到笔记正文</a>
+  <header class="topbar">
+    <div class="identity"><a id="backHome" href="../website/index.html" class="back-link" aria-label="返回项目主页">←</a><strong>个人 Markdown 笔记</strong><span class="prototype-badge">本地笔记</span></div>
+    <nav aria-label="主要操作">
+      <details id="folderMenu" class="folder-menu"><summary aria-label="选择文件夹">文件夹 · <span id="activeFolder">全部笔记</span></summary><div class="folder-popover"><p class="panel-label">浏览文件夹</p><div id="folderList" role="group" aria-label="文件夹列表"></div><hr><button id="importFolder" type="button">导入整个文件夹</button><input id="folderImport" type="file" webkitdirectory directory multiple hidden><p>此入口选择文件夹，不显示其中的文件。选择单个文件请用顶部“导入笔记”。导入的是副本，保存在此浏览器。原文件夹不会自动同步；可从“更多操作”导出。</p></div></details><button id="newNote" class="primary">新建笔记</button><button id="importFiles">导入笔记</button><input id="noteFileImport" type="file" accept=".md,.markdown,.txt" multiple hidden><button id="detailsToggle" aria-controls="details" aria-expanded="false">笔记信息</button><details class="actions-menu"><summary>更多操作</summary><div class="actions-popover"><button id="renameNote">重命名 / 移动</button><button id="deleteNote">删除</button><button id="restoreNote">回收站 <span id="trashCount">0</span></button><button id="exportNotes">导出笔记</button><button id="backup">备份</button><input id="backupFile" type="file" accept=".json,application/json" hidden></div></details><button id="theme">深色</button>
+    </nav>
+  </header>
+  <main class="workspace">
+    <section class="note-panel" aria-label="笔记列表">
+      <div class="note-panel-head"><p class="panel-label">我的资料库</p><h2>笔记</h2></div><div class="search-wrap"><label for="search">搜索标题与正文</label><input id="search" placeholder="搜索笔记…"></div>
+      <div class="filter-row"><button class="tag-filter active" data-tag="">全部</button><button class="tag-filter" data-tag="复习">复习</button><button class="tag-filter" data-tag="重点">重点</button></div>
+      <div id="noteList" class="note-list" aria-live="polite"></div>
+    </section>
+    <section class="editor-panel" aria-label="笔记编辑区">
+      <div class="tabs"><button class="tab active" data-view="preview">阅读与编辑</button><button class="tab" data-view="edit">Markdown 源码</button><span class="context-hint">直接点击正文修改 · Ctrl + 点击打开双链</span><span id="saveState" role="status" aria-live="polite">正在读取…</span><span id="saveRecovery" hidden><button id="retrySave">重试保存</button><button id="saveBackup">导出备份</button></span></div>
+      <div id="editorGrid" class="editor-grid">
+        <label class="sr-only" for="editor">Markdown 正文</label><textarea id="editor" spellcheck="false"></textarea>
+        <article id="preview" class="preview" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="笔记正文，可直接编辑" tabindex="0"></article>
+      </div>
+    </section>
+  </main>
+
+  <aside id="details" class="details" aria-label="笔记信息" aria-hidden="true" tabindex="-1">
+    <header><div><p class="panel-label">当前笔记</p><h2>笔记信息</h2></div><button id="closeDetails">关闭</button></header>
+    <section><h3>标签</h3><label for="tags">使用逗号分隔 · 自动保存</label><input id="tags"></section>
+    <section><h3>反向链接</h3><div id="backlinks" class="backlinks"></div></section>
+    <section><h3>双链提示</h3><p>输入 <code>[[笔记路径]]</code> 建立关联。</p></section>
+  </aside>
+
+  <div id="contextMenu" class="context-menu" role="menu" aria-label="编辑区菜单" hidden>
+    <button role="menuitem" data-action="details">打开笔记信息</button>
+    <button role="menuitem" data-action="insert-link">插入双链</button>
+    <button role="menuitem" data-action="copy-path">复制笔记路径</button>
+  </div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="import-assets.js"></script>
+  <script src="prototype.js"></script>
+  <script src="graph.js"></script>
+  <script src="file-actions.js"></script>
+  <script src="direct-import.js"></script>
+</body>
+</html>
